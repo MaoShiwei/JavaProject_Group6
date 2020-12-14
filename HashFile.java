@@ -107,8 +107,8 @@ public class HashFile {
 
     public static void main(String[] args) {
         try {
-            String path = "D:\\Java\\homework1105";
-            String contentpath = "D:\\Java\\managebase\\content.txt";
+            String path = "D:\\Java\\homework1105";  //文件存储路径
+            String contentpath = "D:\\Java\\managebase\\content.txt";  //文件目录存储路径
             File file = new File(contentpath);
             boolean isOK = file.exists();
             if(isOK){
