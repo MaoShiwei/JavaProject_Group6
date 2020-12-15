@@ -5,24 +5,24 @@ import java.security.MessageDigest;
 
 public class KeyValueStorage {
 
-	protected String path = "D:\\Java\\homework1105";  //ÎÄ¼ş´æ´¢Â·¾¶
+	protected String path = "D:\\Java\\homework1105";  //æ–‡ä»¶å­˜å‚¨è·¯å¾„
 	protected String savepath = "D:\\Java\\managebase\\files";	
 	
 
 	
-	//¶¨ÒåhashÖµ¼ÆËãº¯Êı£ºÊµÏÖÎÄ¼ş»òÎÄ¼ş¼ĞµÄhashÖµ¼ÆËã
+	//å®šä¹‰hashå€¼è®¡ç®—å‡½æ•°ï¼šå®ç°æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹çš„hashå€¼è®¡ç®—
 	public String FileSHA1Checksum(InputStream is) throws Exception {
-			byte[] buffer = new byte[1024];// ÓÃÓÚ¼ÆËãhashÖµµÄÎÄ¼ş»º³åÇø
-			MessageDigest complete = MessageDigest.getInstance("SHA-1");// Ê¹ÓÃSHA1¹şÏ£/ÕªÒªËã·¨
+			byte[] buffer = new byte[1024];// ç”¨äºè®¡ç®—hashå€¼çš„æ–‡ä»¶ç¼“å†²åŒº
+			MessageDigest complete = MessageDigest.getInstance("SHA-1");// ä½¿ç”¨SHA1å“ˆå¸Œ/æ‘˜è¦ç®—æ³•
 	        int numRead = 0;
 	        do {
-	            numRead = is.read(buffer);// ¶Á³önumRead×Ö½Úµ½bufferÖĞ
+	            numRead = is.read(buffer);// è¯»å‡ºnumReadå­—èŠ‚åˆ°bufferä¸­
 	            if (numRead > 0) {
-	                complete.update(buffer, 0, numRead);// ¸ù¾İbuffer[0:numRead]µÄÄÚÈİ¸üĞÂhashÖµ
+	                complete.update(buffer, 0, numRead);// æ ¹æ®buffer[0:numRead]çš„å†…å®¹æ›´æ–°hashå€¼
 	            }
-	        } while (numRead != -1);// ÎÄ¼şÒÑ¶ÁÍê£¬ÍË³öÑ­»·
-	        is.close();// ¹Ø±ÕÊäÈëÁ÷
-	        return getSha1(complete.digest());// ·µ»ØSHA1¹şÏ£Öµ
+	        } while (numRead != -1);// æ–‡ä»¶å·²è¯»å®Œï¼Œé€€å‡ºå¾ªç¯
+	        is.close();// å…³é—­è¾“å…¥æµ
+	        return getSha1(complete.digest());// è¿”å›SHA1å“ˆå¸Œå€¼
 	    }
 	
 	
@@ -71,7 +71,6 @@ public class KeyValueStorage {
 	}
     
 
-	//pathÓ¦¸ÃÊÇÒª´æ´¢µÄÎÄ¼şµÄÎ»ÖÃ
 	public void WriteToFile(String path) throws Exception{
 		String key = FileSHA1Checksum(new FileInputStream(path));
 		File file = new File(savepath +File.separator+ key + ".txt");
