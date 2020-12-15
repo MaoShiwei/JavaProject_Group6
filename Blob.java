@@ -23,8 +23,4 @@ public class Blob extends KeyValueStorage {
 		return key;
 	}
     
-    @Override
-    public String toString() {
-        return vrtype + " " + type + " " + key;
-    }
 }
