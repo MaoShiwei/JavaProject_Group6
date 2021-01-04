@@ -10,11 +10,11 @@ public class Commit extends KeyValueStorage {
     private String comment;
     private String key;
     private File file;
-    private String vrtype = "100644";
-    private LinkedList<String> CommitList = new LinkedList<String>();  
-    
-	public Commit(String path,String parent, String author, String committer, String comment) {
-		super();
+    private LinkedList<String> CommitList = new LinkedList<String>();
+    private String value = "";
+	protected String savepath = "D:\\Java\\managebase\\commits";
+
+	public Commit(String path, String parent, String author, String committer, String comment) {
 		this.path = path;
 		this.file = new File(path);
 		this.parent = parent;
@@ -23,24 +23,31 @@ public class Commit extends KeyValueStorage {
 		this.comment = comment;
 	}
 	
-	public String GetKey() throws Exception {
-		Tree t = new Tree(path);
-		return t.GetKey();
-	}
-	
 	public void ComputeCommit() throws Exception {
-		String value = "";
 		if (CommitList.isEmpty()) {
-			value += GetKey() + "\n" + author + "\n" + committer + "\n" + comment;
-			key = super.GetKey(value);
-			CommitList.add(key);
+			value += "tree " + new Tree(this.file).GetKey() + "\n" + "parent null\n" + "author " + author + "\n" + "committer " + committer + "\n" + "comment " + comment;
+			this.key = StringSHA1Checksum(value);
+			CommitList.add(this.key);
 		} else {
-			if (CommitList.getFirst()!= GetKey()) {
+			if (CommitList.getFirst()!= new Tree(this.file).GetKey()) {
 				parent = CommitList.getFirst();
-				value += GetKey() + "\n" + parent + "\n" + author + "\n" + committer + "n" +comment;
-				CommitList.addFirst(super.GetKey(value));
+				value += "tree " + new Tree(this.file).GetKey() + "\n" + "parent " + parent + "\n" + "author " + author + "\n" + "committer " + committer + "\n" + "comment " + comment;
+				this.key = StringSHA1Checksum(value);
+				CommitList.addFirst(this.key);
 			}
 		}
+	}
+
+	public void write() throws Exception {
+		WriteToString(this.key, this.value, savepath);
+	}
+
+	public String GetKey() {
+		return key;
+	}
+
+	public LinkedList<String> ShowCommitList(){
+		return CommitList;
 	}
 		
 	public String ShowCommit() {
