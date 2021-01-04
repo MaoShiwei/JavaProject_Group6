@@ -6,10 +6,10 @@ import java.security.MessageDigest;
 public class KeyValueStorage {
 
 	protected String path = "D:\\Java\\homework1105";  //文件存储路径
-	protected String savepath = "D:\\Java\\managebase\\files";	
-	
+	protected String savepath = "D:\\Java\\managebase\\files";
 
-	
+
+
 	//定义hash值计算函数：实现文件的hash值计算
 	public String FileSHA1Checksum(InputStream is) throws Exception {
 			byte[] buffer = new byte[1024];// 用于计算hash值的文件缓冲区
@@ -70,7 +70,7 @@ public class KeyValueStorage {
 	     }
 	}
 
-	public void WriteToFile(String key, String path) throws Exception{
+	public void WriteToFile(String key, String path, String savepath) throws Exception{
 		File file = new File(savepath +File.separator+ key);
 		if (!file.getParentFile().exists()) {
 			try {
@@ -95,7 +95,7 @@ public class KeyValueStorage {
         output.close();
     }
 
-	public void WriteToString(String key, String value) throws Exception{
+	public void WriteToString(String key, String value, String savepath) throws Exception{
 		File file = new File(savepath +File.separator+ key);
 		if (!file.getParentFile().exists()) {
 			try {
