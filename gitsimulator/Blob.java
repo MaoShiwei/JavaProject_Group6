@@ -7,7 +7,6 @@ public class Blob extends KeyValueStorage {
 	private String key;	
 	private File file;
 	private String vrtype = "040000";
-	protected String savepath = "D:\\Java\\managebase\\files";
 
 	public Blob(File file) throws Exception {
 		this.file = file;
@@ -20,7 +19,7 @@ public class Blob extends KeyValueStorage {
     } 
     
     public void write(String path) throws Exception {
-        WriteToFile(this.key, path, savepath);
+        WriteToFile(this.key, path);
     }
     
 	public String GetKey() {

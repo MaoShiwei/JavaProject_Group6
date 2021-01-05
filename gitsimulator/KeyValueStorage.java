@@ -6,7 +6,7 @@ import java.security.MessageDigest;
 public class KeyValueStorage {
 
 	protected String path = "D:\\Java\\homework1105";  //文件存储路径
-	protected String savepath = "D:\\Java\\managebase\\files";
+	protected String savepath = "D:\\Java\\managebase\\objects";
 
 
 
@@ -70,7 +70,7 @@ public class KeyValueStorage {
 	     }
 	}
 
-	public void WriteToFile(String key, String path, String savepath) throws Exception{
+	public void WriteToFile(String key, String path) throws Exception{
 		File file = new File(savepath +File.separator+ key);
 		if (!file.getParentFile().exists()) {
 			try {
@@ -95,7 +95,7 @@ public class KeyValueStorage {
         output.close();
     }
 
-	public void WriteToString(String key, String value, String savepath) throws Exception{
+	public void WriteToString(String key, String value) throws Exception{
 		File file = new File(savepath +File.separator+ key);
 		if (!file.getParentFile().exists()) {
 			try {
