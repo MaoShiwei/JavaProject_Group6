@@ -9,6 +9,7 @@ public class Tree extends KeyValueStorage {
 	private File file;
 	private String vrtype = "100644";
 	private String temp = "";
+	protected String savepath = "D:\\Java\\managebase\\files";
 	
     public Tree(String path) throws Exception {
     	this.file = new File(path);
@@ -37,7 +38,7 @@ public class Tree extends KeyValueStorage {
     }
 
 	public void write() throws Exception {
-		WriteToString(this.key, this.temp);
+		WriteToString(this.key, this.temp, savepath);
 	}
     
 	public String GetKey() {

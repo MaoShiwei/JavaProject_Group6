@@ -24,10 +24,24 @@ public class Test {
         }
     }
 
-    public static void main(String args[]){
+    public static void testCommit(String filepath) throws Exception {
+        String author = "java";
+        String committer = "java";
+        String comment = "success!";
+        String parent = "null";
+        Commit commit = new Commit(filepath, parent, author, committer, comment);
+        commit.ComputeCommit();
+        commit.write();
+        System.out.println("成功提交commit: " + commit.GetKey());
+        System.out.println(commit.ShowCommitList());
+    }
+
+    public static void main(String args[]) throws Exception {
         Scanner input = new Scanner(System.in);
         System.out.println("请输入文件或文件夹的路径名：");
         String path = input.next();
         testKey(path);
+        testCommit(path);
+        testCommit("D:\\Java\\homework1105");
     }
 }
