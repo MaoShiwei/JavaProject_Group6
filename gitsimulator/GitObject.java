@@ -3,29 +3,26 @@ package gitsimulator;
 import java.io.*;
 import java.security.MessageDigest;
 
-public class GitObject {
+public class GitObject {//Blob£¬Tree£¬CommitÀàĞÍµÄ¸¸Àà
 
-	protected String path = "D:\\Java\\homework1105";  //æ–‡ä»¶å­˜å‚¨è·¯å¾„
-	protected String savepath = "D:\\Java\\managebase\\objects";
+	protected String savepath = "D:\\Java\\managebase\\objects";//Ä¬ÈÏ´æ´¢Â·¾¶
 
-
-
-	//å®šä¹‰hashå€¼è®¡ç®—å‡½æ•°ï¼šå®ç°æ–‡ä»¶çš„hashå€¼è®¡ç®—
+	//¶¨ÒåhashÖµ¼ÆËãº¯Êı£ºÊµÏÖÎÄ¼şµÄhashÖµ¼ÆËã
 	public String FileSHA1Checksum(InputStream is) throws Exception {
-			byte[] buffer = new byte[1024];// ç”¨äºè®¡ç®—hashå€¼çš„æ–‡ä»¶ç¼“å†²åŒº
-			MessageDigest complete = MessageDigest.getInstance("SHA-1");// ä½¿ç”¨SHA1å“ˆå¸Œ/æ‘˜è¦ç®—æ³•
+			byte[] buffer = new byte[1024];// ÓÃÓÚ¼ÆËãhashÖµµÄÎÄ¼ş»º³åÇø
+			MessageDigest complete = MessageDigest.getInstance("SHA-1");// Ê¹ÓÃSHA1¹şÏ£/ÕªÒªËã·¨
 	        int numRead = 0;
 	        do {
-	            numRead = is.read(buffer);// è¯»å‡ºnumReadå­—èŠ‚åˆ°bufferä¸­
+	            numRead = is.read(buffer);// ¶Á³önumRead×Ö½Úµ½bufferÖĞ
 	            if (numRead > 0) {
-	                complete.update(buffer, 0, numRead);// æ ¹æ®buffer[0:numRead]çš„å†…å®¹æ›´æ–°hashå€¼
+	                complete.update(buffer, 0, numRead);// ¸ù¾İbuffer[0:numRead]µÄÄÚÈİ¸üĞÂhashÖµ
 	            }
-	        } while (numRead != -1);// æ–‡ä»¶å·²è¯»å®Œï¼Œé€€å‡ºå¾ªç¯
-	        is.close();// å…³é—­è¾“å…¥æµ
-	        return getSha1(complete.digest());// è¿”å›SHA1å“ˆå¸Œå€¼
+	        } while (numRead != -1);// ÎÄ¼şÒÑ¶ÁÍê£¬ÍË³öÑ­»·
+	        is.close();// ¹Ø±ÕÊäÈëÁ÷
+	        return getSha1(complete.digest());// ·µ»ØSHA1¹şÏ£Öµ
 	    }
 	
-	//å®šä¹‰hashå€¼è®¡ç®—å‡½æ•°ï¼šå®ç°å­—ç¬¦ä¸²ç±»æ–‡ä»¶çš„hashå€¼è®¡ç®—
+	//¶¨ÒåhashÖµ¼ÆËãº¯Êı£ºÊµÏÖ×Ö·û´®ÀàÎÄ¼şµÄhashÖµ¼ÆËã
     public String StringSHA1Checksum(String value) throws Exception{
         MessageDigest complete = MessageDigest.getInstance("SHA-1");
         complete.update(value.getBytes());
@@ -33,7 +30,7 @@ public class GitObject {
     }
 	
 	
-	public String getSha1(byte[] temp) {
+	public String getSha1(byte[] temp) {//¼ÆËãSha1
 		String sha1 = "";
 		for(int i=0;i<temp.length;i++) {
 			sha1 += Integer.toString(temp[i] & 0xFF, 16);
@@ -52,25 +49,25 @@ public class GitObject {
     }
     
     
-	public String GetValue(String key) throws Exception{
+	public String GetValue(String key) throws Exception{//»ñÈ¡ÎÄ¼şµÄvalue
 		File file = new File(savepath + File.separator + key);
-		if(!file.exists()) 
+		if(!file.exists())
 			return null;
 		else {
 			BufferedReader in = new BufferedReader(
 					new InputStreamReader(
 							new FileInputStream(file)));
 	        StringBuffer value = new StringBuffer();
-			String line; 
+			String line;
 	        while((line = in.readLine())!=null) {
 	        	value.append(line);
 	        }
 	        in.close();
-	        return value.toString();    	        
+	        return value.toString();
 	     }
 	}
 
-	public void WriteToFile(String key, String path) throws Exception{
+	public void WriteToFile(String key, String path) throws Exception{//½øĞĞÎÄ¼şĞ´Èë²Ù×÷
 		File file = new File(savepath +File.separator+ key);
 		if (!file.getParentFile().exists()) {
 			try {
@@ -95,7 +92,7 @@ public class GitObject {
         output.close();
     }
 
-	public void WriteToString(String key, String value) throws Exception{
+	public void WriteToString(String key, String value) throws Exception{//×Ö·û´®ÀàĞÍĞ´Èë²Ù×÷
 		File file = new File(savepath +File.separator+ key);
 		if (!file.getParentFile().exists()) {
 			try {
