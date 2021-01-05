@@ -54,7 +54,7 @@ public class unitTest {
         }
     }
 
-    //生成value测试
+    //生成keyvalue测试
     public static void testKeyValueStorage(File file) throws Exception{
         try{
             if(file.isFile()) {
@@ -62,10 +62,14 @@ public class unitTest {
                 //获取文件key
                 String key = keyValueStorage.GetKey(new FileInputStream(file));
                 //将文件重新写入 用于下面GetValue 获取到文件
-                keyValueStorage.WriteToFile(keyValueStorage.GetValue(key), "D:\\Java\\managebase\\content.txt");
+                keyValueStorage.WriteToFile(keyValueStorage.GetValue(key), "D:\\Java\\managebase\\kvstest.txt");
                 //通过key获取文件
                 String s = keyValueStorage.GetValue(key);
-                System.out.println("文件的内容value是：" + s);
+                System.out.println("文件的内容是：" + s);
+                System.out.println("文件的value是："+new Blob(file).GetType()+" "+new Blob(file).Getvrtype()+" "+new Blob(file).GetKey());
+            }
+            else if(file.isDirectory()){
+                System.out.println("文件夹的内容是："+new Tree(file).GetValue());
             }
         } catch (Exception e) {
             e.printStackTrace();
