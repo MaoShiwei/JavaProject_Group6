@@ -10,9 +10,8 @@ public class Commit extends KeyValueStorage {
     private String comment;
     private String key;
     private File file;
-    private LinkedList<String> CommitList = new LinkedList<String>();
+    static LinkedList<String> CommitList = new LinkedList<String>();
     private String value = "";
-	protected String savepath = "D:\\Java\\managebase\\commits";
 
 	public Commit(String path, String parent, String author, String committer, String comment) {
 		this.path = path;
@@ -39,14 +38,14 @@ public class Commit extends KeyValueStorage {
 	}
 
 	public void write() throws Exception {
-		WriteToString(this.key, this.value, savepath);
+		WriteToString(this.key, this.value);
 	}
 
 	public String GetKey() {
 		return key;
 	}
 
-	public LinkedList<String> ShowCommitList(){
+	public static LinkedList<String> ShowCommitList(){
 		return CommitList;
 	}
 		
