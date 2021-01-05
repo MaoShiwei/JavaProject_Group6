@@ -2,7 +2,7 @@ package gitsimulator;
 
 import java.io.*;
 
-public class Tree extends KeyValueStorage {
+public class Tree extends GitObject {
 	private String type = "tree";
 	private String path;
 	private String key;	

@@ -3,7 +3,7 @@ package gitsimulator;
 import java.util.LinkedList;
 import java.io.*;
 
-public class Commit extends KeyValueStorage {
+public class Commit extends GitObject {
     private String parent;
     private String author;
     private String committer;
@@ -23,24 +23,21 @@ public class Commit extends KeyValueStorage {
 	}
 	
 	public void ComputeCommit() throws Exception {
+		String FileKey = "";
+		if(this.file.isFile()){
+			FileKey = new Blob(this.file).GetKey();
+		}
+		if(this.file.isDirectory()){
+			FileKey = new Tree(this.file).GetKey();
+		}
 		if (CommitList.isEmpty()) {
-			if(this.file.isFile()){
-				value += "tree " + new Blob(this.file).GetKey() + "\n" + "parent null\n" + "author " + author + "\n" + "committer " + committer + "\n" + "comment " + comment;
-			}
-			if(this.file.isDirectory()){
-				value += "tree " + new Tree(this.file).GetKey() + "\n" + "parent null\n" + "author " + author + "\n" + "committer " + committer + "\n" + "comment " + comment;
-			}
+			value += "tree " + FileKey + "\n" + "parent null\n" + "author " + author + "\n" + "committer " + committer + "\n" + "comment " + comment;
 			this.key = StringSHA1Checksum(value);
 			CommitList.add(this.key);
 		} else {
-			if (CommitList.getFirst()!= new Tree(this.file).GetKey()) {
+			if (CommitList.getFirst()!= FileKey) {
 				parent = CommitList.getFirst();
-				if(this.file.isFile()){
-					value += "tree " + new Blob(this.file).GetKey() + "\n" + "parent " + parent + "\n" + "author " + author + "\n" + "committer " + committer + "\n" + "comment " + comment;
-				}
-				if(this.file.isDirectory()){
-					value += "tree " + new Tree(this.file).GetKey() + "\n" + "parent " + parent + "\n" + "author " + author + "\n" + "committer " + committer + "\n" + "comment " + comment;
-				}
+				value += "tree " + FileKey + "\n" + "parent " + parent + "\n" + "author " + author + "\n" + "committer " + committer + "\n" + "comment " + comment;
 				this.key = StringSHA1Checksum(value);
 				CommitList.addFirst(this.key);
 			}

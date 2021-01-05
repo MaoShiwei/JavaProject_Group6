@@ -2,7 +2,7 @@ package gitsimulator;
 
 import java.io.*;
 
-public class Blob extends KeyValueStorage {
+public class Blob extends GitObject {
 	private String type = "blob";
 	private String key;	
 	private File file;

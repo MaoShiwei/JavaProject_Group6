@@ -70,15 +70,22 @@ public class Test {
         reset.Resetcommit(commitkey, resetpath);
     }
 
+    public static void testBranch(String branchname,String commitkey) throws Exception {
+        Branch branch = new Branch(branchname,commitkey);
+        System.out.println(branch.getBranchName());
+        System.out.println(branch.getCommitId());
+    }
+
     public static void main(String args[]) throws Exception {
+        HEAD head = new HEAD();
+        Branch master = new Branch("master","");
         Scanner input = new Scanner(System.in);
         System.out.println("请输入文件或文件夹的路径名：");
         String path = input.next();
         testAllKey(path);
-        testCommit("D:\\Java\\test.docx");
         testCommit(path);
-        HEAD head = new HEAD();
-        System.out.println(head.getHEAD());
+        testCommit("D:\\Java\\test.docx");
+        testBranch("branch","f191141f83d69e2ca5287bd5881635903fc8e6a7");
         //testReset("f191141f83d69e2ca5287bd5881635903fc8e6a7", "D:\\Java\\reset");
     }
 }

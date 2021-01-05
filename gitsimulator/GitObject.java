@@ -3,7 +3,7 @@ package gitsimulator;
 import java.io.*;
 import java.security.MessageDigest;
 
-public class KeyValueStorage {
+public class GitObject {
 
 	protected String path = "D:\\Java\\homework1105";  //文件存储路径
 	protected String savepath = "D:\\Java\\managebase\\objects";
