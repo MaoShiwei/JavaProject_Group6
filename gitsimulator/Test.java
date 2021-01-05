@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Test {
     //生成hash值测试函数
-    public static void testKey(String filepath){
+    public static void testSingleKey(String filepath){
         File file = new File(filepath);
         try{
             if(file.isDirectory()){
@@ -23,7 +23,7 @@ public class Test {
             ex.printStackTrace();
         }
     }
-
+    //生成Commit测试函数
     public static void testCommit(String filepath) throws Exception {
         String author = "java";
         String committer = "java";
@@ -40,8 +40,10 @@ public class Test {
         Scanner input = new Scanner(System.in);
         System.out.println("请输入文件或文件夹的路径名：");
         String path = input.next();
-        testKey(path);
+        testSingleKey(path);
         testCommit(path);
         testCommit("D:\\Java\\homework1105");
+        HEAD head = new HEAD();
+        System.out.println(head.getHEAD());
     }
 }
