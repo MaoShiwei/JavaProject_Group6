@@ -1,12 +1,12 @@
 package gitsimulator;
 
-public class Diff extends KeyValueStorage{
+public class Diff extends GitObject{
 	
 
     char[] input1;
     char[] input2;
-    int M;  //input1µÄlength;
-    int N;  //input2µÄlength
+    int M;  //input1çš„length;
+    int N;  //input2çš„length
     
     public Diff(String FileName1, String FileName2) throws Exception {
     	input1 = (super.GetValue(FileName1)).toCharArray();
