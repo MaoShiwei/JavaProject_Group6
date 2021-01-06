@@ -2,9 +2,9 @@ package gitsimulator;
 
 import java.io.*;
 
-public class Ref {
+public class Ref {//HEAD,Branch,Reset的父类
 
-    public void Write(String path, String value) throws Exception{
+    public void Write(String path, String value) throws Exception{//写入啊哦做
         File file = new File(path);
         if (!file.getParentFile().exists()) {
             try {
@@ -21,7 +21,7 @@ public class Ref {
         bw.close();
     }
 
-    public void WriteToFile(String savepath, String targetpath) throws Exception{
+    public void WriteToFile(String savepath, String targetpath) throws Exception{//文件与文件之间的读取写入操作
         File file = new File(savepath);
         if (!file.getParentFile().exists()) {
             try {
@@ -46,7 +46,7 @@ public class Ref {
         output.close();
     }
 
-    public String Readfile(String path) {
+    public String Readfile(String path) {//读取文件
         File file = new File(path);
         String result = "";
         try{

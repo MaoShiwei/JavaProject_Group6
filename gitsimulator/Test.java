@@ -6,34 +6,33 @@ import java.security.MessageDigest;
 import java.util.Scanner;
 
 public class Test {
-    //ç”Ÿæˆå•ä¸ªæ–‡ä»¶å¤¹æˆ–æ–‡ä»¶çš„hashå€¼æµ‹è¯•å‡½æ•°
+    //Éú³Éµ¥¸öÎÄ¼ş¼Ğ»òÎÄ¼şµÄhashÖµ²âÊÔº¯Êı
     public static void testSingleKey(String filepath){
-        File file = new File(filepath);
+        File file = new File(filepath);//¸ù¾İÂ·¾¶Éú³ÉfileÎÄ¼ş
         try{
-            if(file.isDirectory()){
-                Tree tree = new Tree(file);
-                tree.write();
-                System.out.println("æ–‡ä»¶å¤¹çš„hashå€¼ä¸ºï¼š" + tree.GetKey());
+            if(file.isDirectory()){//ÎÄ¼ş¼ĞÀàĞÍ
+                Tree tree = new Tree(file);//µ÷ÓÃTreeÉú³ÉhashÖµ
+                tree.write();//½«KeyValueĞ´Èëobjects´æ´¢ÎÄ¼ş¼Ğ
+                System.out.println("ÎÄ¼ş¼ĞµÄhashÖµÎª£º" + tree.GetKey());
             }
             else if(file.isFile()){
-                Blob blob = new Blob(file);
-                blob.write(filepath);
-                System.out.println("æ–‡ä»¶çš„hashå€¼ä¸ºï¼š" + blob.GetKey());
+                Blob blob = new Blob(file);//µ÷ÓÃBlobÉú³ÉhashÖµ
+                blob.write(filepath);//½«KeyValueĞ´Èëobjects´æ´¢ÎÄ¼ş¼Ğ
+                System.out.println("ÎÄ¼şµÄhashÖµÎª£º" + blob.GetKey());
             }
         }
         catch (Exception ex){
             ex.printStackTrace();
         }
     }
-    //ç”Ÿæˆæ•´ä¸ªæ–‡ä»¶å¤¹projectçš„hashå€¼æµ‹è¯•å‡½æ•°
+    //Éú³ÉÕû¸öÎÄ¼ş¼ĞprojectµÄhashÖµ²âÊÔº¯Êı,Ä¿Ç°Ö»ÄÜ²âÊÔÎÄ¼ş¼Ğ£¬²âÊÔµ¥¸öÎÄ¼ş¿ÉÄÜ»á±¨´í
     public static void testAllKey(String filepath){
-        testSingleKey(filepath);
+        testSingleKey(filepath);//ĞèÒªÊ×ÏÈ¶ÔÎÄ¼ş¼ĞÂ·¾¶½øĞĞhashÖµ¼ÆËã
         File dir = new File(filepath);
         File[] fs = dir.listFiles();
         int a = fs.length;
-        String array = "";
         for(int i = 0; i < a; i++) {
-            if(fs[i].isFile()) {
+            if(fs[i].isFile()) {//¶ÁÈ¡µ½ÎÄ¼şÀàĞÍ
                 try{
                     Blob blob = new Blob(filepath + File.separator + fs[i].getName());
                     blob.write(filepath + File.separator + fs[i].getName());
@@ -41,51 +40,54 @@ public class Test {
                     e.printStackTrace();
                 }
             }
-            if(fs[i].isDirectory()) {
+            if(fs[i].isDirectory()) {//¶ÁÈ¡µ½ÎÄ¼ş¼ĞÀàĞÍ
                 try{
                     Tree tree = new Tree(filepath + File.separator + fs[i].getName());
                     tree.write();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                testAllKey(filepath + File.separator + fs[i].getName());
+                testAllKey(filepath + File.separator + fs[i].getName());//µİ¹éµ÷ÓÃ²âÊÔÎÄ¼ş¼Ğº¯Êı
             }
         }
     }
-    //ç”ŸæˆCommitæµ‹è¯•å‡½æ•°
-    public static void testCommit(String filepath) throws Exception {
-        String author = "java";
-        String committer = "java";
-        String comment = "success!";
-        String parent = "null";
-        Commit commit = new Commit(filepath, parent, author, committer, comment);
-        commit.ComputeCommit();
-        commit.write();
-        System.out.println("æˆåŠŸæäº¤commit: " + commit.GetKey());
-        System.out.println(commit.ShowCommitList());
+    //Éú³ÉCommit²âÊÔº¯Êı
+    public static String testCommit(String filepath) throws Exception {
+        String author = "java";//commit×÷Õß£¬¿É½»»¥
+        String committer = "java";//commitÌá½»Õß£¬¿É½»»¥
+        String comment = "success!";//commitÆÀÂÛ£¬¿É½»»¥
+        String parent = "null";//³õÊ¼Éè¶¨µÚÒ»´Îcommit£¬Ç°Ò»¸öcommit²»´æÔÚ
+        Commit commit = new Commit(filepath, parent, author, committer, comment);//Éú³Écommit
+        commit.ComputeCommit();//¼ÆËãcommitµÄhashÖµ
+        commit.write();//½«KeyValueĞ´Èëobjects´æ´¢ÎÄ¼ş¼Ğ
+        System.out.println("³É¹¦Ìá½»commit: " + commit.GetKey());//ÌáÊ¾³É¹¦Ìá½»commit²¢ÏÔÊ¾commitµÄhashÖµ
+        System.out.println(commit.ShowCommitList());//ÏÔÊ¾µ±Ç°commitÁĞ±í
+        return commit.GetKey();//·µ»ØcommitµÄhashÖµ
     }
-    //ç”Ÿæˆresetæµ‹è¯•å‡½æ•°
+    //Éú³Éreset²âÊÔº¯Êı
     public static void testReset(String commitkey, String resetpath) throws Exception {
-        Reset reset = new Reset();
-        reset.Resetcommit(commitkey, resetpath);
-    }
-
-    public static void testBranch(String branchname,String commitkey) throws Exception {
-        Branch branch = new Branch(branchname,commitkey);
-        System.out.println(branch.getBranchName());
-        System.out.println(branch.getCommitId());
+        Reset reset = new Reset();//Éú³Éreset
+        reset.Resetcommit(commitkey, resetpath);//¸ù¾İĞèÒªresetµÄcommitÖµÒÔ¼°ÎÄ¼ş×îÖÕĞèÒª»Ö¸´µ½µÄ¹¤×÷Â·¾¶½øĞĞreset
     }
 
     public static void main(String args[]) throws Exception {
-        HEAD head = new HEAD();
-        Branch master = new Branch("master","");
+        HEAD head = new HEAD();//Éú³É³õÊ¼»¯HEADÎÄ¼ş
+        Branch master = new Branch("master","");//Éú³É³õÊ¼»¯masterÖ÷·ÖÖ§£¬ÄÚÈİ³õÊ¼»¯Îª¿Õ
         Scanner input = new Scanner(System.in);
-        System.out.println("è¯·è¾“å…¥æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹çš„è·¯å¾„åï¼š");
+        System.out.println("ÇëÊäÈëÎÄ¼ş»òÎÄ¼ş¼ĞµÄÂ·¾¶Ãû£º");
         String path = input.next();
-        testAllKey(path);
-        testCommit(path);
-        testCommit("D:\\Java\\test.docx");
-        testBranch("branch","f191141f83d69e2ca5287bd5881635903fc8e6a7");
-        //testReset("f191141f83d69e2ca5287bd5881635903fc8e6a7", "D:\\Java\\reset");
+        testAllKey(path);//¶ÔÊäÈëÂ·¾¶½øĞĞKeyValue´æ´¢£¬±ØĞëÔÚcommitÖ®Ç°ÏÈ½øĞĞKeyValue´æ´¢
+        String commitkey = testCommit(path);//²¢¸ù¾İ¸ÃÂ·¾¶Éú³ÉµÚÒ»´Îcommit
+        master.updateBranch(commitkey);//¸üĞÂÖ÷·ÖÖ§masterµÄÄÚÈİ
+        testSingleKey("D:\\Java\\test.docx");//²âÊÔµ¥¸öÎÄ¼şµÄhashÖµÉú³É
+        commitkey = testCommit("D:\\Java\\test.docx");//½«µ¥¸öÎÄ¼ş×÷ÎªcommitµÄÌá½»ĞÎÊ½Ìá½»
+        master.updateBranch(commitkey);//¸üĞÂÖ÷·ÖÖ§masterµÄÄÚÈİ
+        Branch branch = new Branch("branch", master.getCommitId());//Éú³ÉÒ»¸öĞÂµÄ·ÖÖ§
+        head.updateHEAD("branch");//ÇĞ»»¹¤×÷·ÖÖ§£¬¸üĞÂHEADÖ¸ÏòĞÂµÄ·ÖÖ§
+        testAllKey("D:\\Java\\homework1105");//²âÊÔÒ»¸öĞÂµÄ¹¤×÷Â·¾¶
+        commitkey = testCommit("D:\\Java\\homework1105");//²¢×÷ÎªcommitÌá½»
+        branch.updateBranch(commitkey);//¸üĞÂ·ÖÖ§µÄÄÚÈİ
+        testReset("7a2035435f15bcf795194defb13f6b18e339a1", "D:\\Java\\reset");//¸ù¾İcommitµÄhashÖµ£¬½øĞĞreset²Ù×÷
     }
 }
+//²âÊÔ²¹³äËµÃ÷£ºKeyValueµÄ²úÉú±¾ÖÊÊÇÎªÁËÌá½»commit£¬ÔÚ²âÊÔcommitµÄÊ±ºò£¬²»ÄÜÍü¼ÇÉú³ÉKeyValue£¬·ñÔò»áÔì³ÉÎŞ·¨resetµÄÎÊÌâ£¬Ä¿Ç°reset»¹²»ÄÜ»Ö¸´µ¥¸öÎÄ¼şÌá½»µÄcommit
