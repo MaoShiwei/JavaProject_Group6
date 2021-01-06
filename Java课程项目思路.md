@@ -1,6 +1,6 @@
 ### Java课程项目思路
 
-##### 1、构建KeyValueStorage类：
+##### 1、构建GitObject类：
 
 - 定义hash值计算函数：实现文件或文件夹的hash值计算。
 - 定义文件读取函数：实现文件的读取，将value存储到输入流中。
@@ -8,21 +8,21 @@
 - 定义查找value函数：通过输入key值可以返回对应的value。
 - 定义生成key函数：输入新的value以后，可以生成并返回对应的key值。
 
-##### 2、构建Blob类继承自KeyValueStorage类：
+##### 2、构建Blob类继承自GitObject类：
 
 - 定义生成key函数：文件的输入方式为文件所在路径，读取文件路径并生成hash值（此处为对文件内容进行hash）。
 - 定义返回文件名函数：返回文件的文件名。
 - 定义返回key值函数：返回文件对应的key。
 - 设定文件类型为Blob。
 
-##### 3、构建Tree类继承自KeyValueStorage类：
+##### 3、构建Tree类继承自GitObject类：
 
 - 定义生成key函数：遍历文件夹内的所有文件夹与文件，通过文件类型、hash值、文件名构成的字符串数组构造hash值（此处为对字符串进行hash）。Tree类型的value只显示该文件夹内的所有内容，不用显示子文件夹中内容。
 - 定义返回文件名函数：返回文件夹名称。
 - 定义返回key值函数：返回文件夹对应的key。
 - 设定文件类型为Tree。
 
-##### 4、构建Commit类继承自KeyValueStorage类：
+##### 4、构建Commit类继承自GitObject类：
 
 - 定义判断commit函数：对于新提交的commit，计算文件的hash值，通过深度遍历，计算文件与文件夹的hash值。并与前一个commit比对，如果hash值相同，则不再重复生成文件，直接将hash值存入树中，如果hash值不同，则生成新的文件，并更新整个commit对应的tree。如果与前一个commit没有不同，则不是符合条件的commit，不进行添加操作。
 - 定义生成hash值函数：通过本次commit对应的内容的信息，提交时间，提交人，作者，前一个commit的信息所构成的字符串数组构造hash值（此处为对字符串进行hash）。
@@ -41,7 +41,7 @@
 
 - 设置master主分支，在refs文件夹中生成名为master的文件，文件内存储最新commit对应的hash值。
 
-##### 7、构建Branch类继承自KeyValueStorage类：
+##### 7、构建Branch类继承自Ref类：
 
 - 定义生成branch函数：在refs文件夹中生成以branch的名字命名的文件，文件内存储Head指针对应的hash值。
 - 定义更新branch函数：在branch分支上，根据提交的commit，更新为最新commit的hash值。
