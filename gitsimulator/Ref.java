@@ -21,6 +21,31 @@ public class Ref {
         bw.close();
     }
 
+    public void WriteToFile(String savepath, String targetpath) throws Exception{
+        File file = new File(savepath);
+        if (!file.getParentFile().exists()) {
+            try {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        file.createNewFile();
+        FileInputStream input = new FileInputStream(targetpath);
+        FileOutputStream output = new FileOutputStream(file);
+        byte[] buffer = new byte[1024];
+        int numRead = 0;
+        do {
+            numRead = input.read(buffer);
+            if(numRead > 0){
+                output.write(buffer,0,numRead);
+            }
+        }while(numRead!=-1);
+        input.close();
+        output.close();
+    }
+
     public String Readfile(String path) {
         File file = new File(path);
         String result = "";
