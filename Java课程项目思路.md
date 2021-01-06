@@ -8,22 +8,15 @@
 - 定义查找value函数：通过输入key值可以返回对应的value。
 - 定义生成key函数：输入新的value以后，可以生成并返回对应的key值。
 
-<<<<<<< HEAD
+
 ##### 2、构建Blob类继承自GitObject类：
-=======
-##### 2、构建Blob类继承自KeyValueStorage类：
->>>>>>> upstream/master
 
 - 定义生成key函数：文件的输入方式为文件所在路径，读取文件路径并生成hash值（此处为对文件内容进行hash）。
 - 定义返回文件名函数：返回文件的文件名。
 - 定义返回key值函数：返回文件对应的key。
 - 设定文件类型为Blob。
 
-<<<<<<< HEAD
 ##### 3、构建Tree类继承自GitObject类：
-=======
-##### 3、构建Tree类继承自KeyValueStorage类：
->>>>>>> upstream/master
 
 - 定义生成key函数：遍历文件夹内的所有文件夹与文件，通过文件类型、hash值、文件名构成的字符串数组构造hash值（此处为对字符串进行hash）。Tree类型的value只显示该文件夹内的所有内容，不用显示子文件夹中内容。
 - 定义返回文件名函数：返回文件夹名称。
@@ -49,11 +42,8 @@
 
 - 设置master主分支，在refs文件夹中生成名为master的文件，文件内存储最新commit对应的hash值。
 
-<<<<<<< HEAD
 ##### 7、构建Branch类继承自Ref类：
-=======
-##### 7、构建Branch类继承自KeyValueStorage类：
->>>>>>> upstream/master
+
 
 - 定义生成branch函数：在refs文件夹中生成以branch的名字命名的文件，文件内存储Head指针对应的hash值。
 - 定义更新branch函数：在branch分支上，根据提交的commit，更新为最新commit的hash值。
@@ -74,7 +64,7 @@
 
 ###### 初期实现：通过Scanner接收用户指令，将已实现的功能通过标号列举出来，用户可以通过选择标号，实现对应的操作。
 
-<<<<<<< HEAD
+
 - 通过unitTest文件对gitObject.java,Blob.java,Tree.java,Commit.java,Branch.java,Reset.java,Log.java几个文件进行功能测试，每个功能写一个方法，用main函数调用测试，确保其成功运行，目标功能顺利实现。
 
 ###### 后期实现目标：通过main函数命令行参数String[] args接收用户指令。
@@ -88,15 +78,4 @@
 - 提交一个commit：用户输入一个路径，或者改变了某个文件或文件夹，可以生成一个新的key-value键值对，按头插法插入用户所在分支的commit链表中。
 - 创建一个branch：用户输入一个branch名，生成一个新的branch，并自动切换到新的branch。
 - 查看commit操作：用户输入git-log,可以看到所有已有commit，以便于对其进行操作。
-- 回滚：用户输入git-reset,根据输入已查找的需要回滚的commit的hash值，进行回滚操作。
-=======
-###### 后期实现目标：通过main函数命令行参数String[] args接收用户指令。
-
-- 生成一个project：用户输入一个路径，可以通过路径生成对应的key-value键值对，默认为第一个commit，并自动设置为master分支，更新Head值。
-
-- 提交一个commit：用户输入一个路径，或者改变了某个文件或文件夹，可以生成一个新的key-value键值对，按头插法插入用户所在分支的commit链表中。
-- 创建一个branch：用户输入一个branch名，生成一个新的branch。
-- 切换branch：用户提交切换branch命令后，所有改变将只会在branch上发生。
-- 查看commit操作：用户可以看到所有已有commit，以便于对其进行操作。
-- 回滚：根据查找的需要回滚的commit的hash值，进行回滚操作。
->>>>>>> upstream/master
+- 回滚：用户输入git-reset,根据输入已查找的需要回滚的commit的hash值，进行回滚操作，
