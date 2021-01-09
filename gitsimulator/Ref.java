@@ -4,7 +4,7 @@ import java.io.*;
 
 public class Ref {//HEAD,Branch,Reset的父类
 
-    public void Write(String path, String value) throws Exception{//写入啊哦做
+    public void Write(String path, String value) throws Exception{//写入操作
         File file = new File(path);
         if (!file.getParentFile().exists()) {
             try {

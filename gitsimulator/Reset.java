@@ -20,7 +20,7 @@ public class Reset extends Ref{//继承自Ref
         String[] objects = objectstr.split("\n");//通过换行符获得tree中的每一个文件或文件夹信息
         int a = objects.length;
         for (int i = 0; i < a; i++){
-            String[] object = objects[i].split(" ");//谈过空格符对信息进行进一步划分，object[0]表示文件访问权限，object[1]表示文件类型，object[2]表示文件hash值，object[3]表示文件名
+            String[] object = objects[i].split(" ");//通过空格符对信息进行进一步划分，object[0]表示文件访问权限，object[1]表示文件类型，object[2]表示文件hash值，object[3]表示文件名
             if (object[1].equals("tree")){  //必须用equals判定
                 File file = new File (resetpath + File.separator + object[3]);
                 file.mkdirs();//对于tree类型，根据文件夹生成对应的路径

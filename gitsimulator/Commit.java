@@ -1,7 +1,9 @@
 package gitsimulator;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.io.*;
+import java.util.TimeZone;
 
 public class Commit extends GitObject {//继承自GitObject
     private String parent;//上一个commit对应的hash值
@@ -13,6 +15,8 @@ public class Commit extends GitObject {//继承自GitObject
     static LinkedList<String> CommitList = new LinkedList<String>();//commit链表
     private String value = "";//commit的全部内容
 	private String path = "";
+	private long date = new Date().getTime();
+	private String timezone = "+0800";
 
 	public Commit(String path, String parent, String author, String committer, String comment) {
 		this.path = path;
@@ -32,13 +36,13 @@ public class Commit extends GitObject {//继承自GitObject
 			FileKey = new Tree(this.file).GetKey();//按照Tree类进行hash值生成
 		}
 		if (CommitList.isEmpty()) {//如果此时链表为空，表明是第一个commit，默认parent为null
-			value += "tree " + FileKey + "\n" + "parent null\n" + "author " + author + "\n" + "committer " + committer + "\n" + "comment " + comment;
+			value += "tree " + FileKey + "\n" + "parent null\n" + "author " + author + " " + date + " " + timezone + "\n" + "committer " + committer + " " + date + " " + timezone + "\n" + "comment " + comment;
 			this.key = StringSHA1Checksum(value);//进行hash值计算
 			CommitList.add(this.key);//向链表添加commit
 		} else {
 			if (CommitList.getFirst()!= FileKey) {//判断当前commit是否与前一个commit不同
 				parent = CommitList.getFirst();//获取上一个commit的hash值
-				value += "tree " + FileKey + "\n" + "parent " + parent + "\n" + "author " + author + "\n" + "committer " + committer + "\n" + "comment " + comment;
+				value += "tree " + FileKey + "\n" + "parent " + parent + "\n" + "author " + author + " " + date + " " + timezone + "\n" + "committer " + committer + " " + date + " " + timezone + "\n" + "comment " + comment;
 				this.key = StringSHA1Checksum(value);//进行hash值计算
 				CommitList.addFirst(this.key);//向链表添加commit
 			}
