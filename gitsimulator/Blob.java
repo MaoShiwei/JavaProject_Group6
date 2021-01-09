@@ -6,7 +6,7 @@ public class Blob extends GitObject {//继承自GitObject
 	private String type = "blob";//文件类型为blob
 	private String key;	//文件的hash值
 	private File file;//文件
-	private String vrtype = "040000";//文件访问权限
+	private String vrtype = "100644";//文件访问权限
 
 	public Blob(File file) throws Exception {//通过file新建Blob类
 		this.file = file;//更新file的内容

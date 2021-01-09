@@ -1,31 +1,61 @@
 package gitsimulator;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.util.Scanner;
 
-public class unitTest {
-    //ç”Ÿæˆhashå€¼æµ‹è¯•å‡½æ•°
+public class unitTest{
+    //Éú³Éµ¥¸öÎÄ¼ş¼Ğ»òÎÄ¼şµÄhashÖµ²âÊÔº¯Êı
     public static void testSingleKey(String filepath){
         File file = new File(filepath);
         try{
             if(file.isDirectory()){
                 Tree tree = new Tree(file);
                 tree.write();
-                System.out.println("æ–‡ä»¶å¤¹çš„hashå€¼ä¸ºï¼š" + tree.GetKey());
+                System.out.println("ÎÄ¼ş¼ĞµÄhashÖµÎª£º" + tree.GetKey());
             }
             else if(file.isFile()){
                 Blob blob = new Blob(file);
                 blob.write(filepath);
-                System.out.println("æ–‡ä»¶çš„hashå€¼ä¸ºï¼š" + blob.GetKey());
+                System.out.println("ÎÄ¼şµÄhashÖµÎª£º" + blob.GetKey());
             }
         }
         catch (Exception ex){
             ex.printStackTrace();
         }
     }
-    //ç”ŸæˆCommitæµ‹è¯•å‡½æ•°
-    public static void testCommit(String filepath) throws Exception {
+    //Éú³ÉÕû¸öÎÄ¼ş¼ĞprojectµÄhashÖµ²âÊÔº¯Êı
+    public static void testAllKey(String filepath){
+        testSingleKey(filepath);
+        File dir = new File(filepath);
+        File[] fs = dir.listFiles();
+        int a = fs.length;
+        String array = "";
+        for(int i = 0; i < a; i++) {
+            if(fs[i].isFile()) {
+                try{
+                    Blob blob = new Blob(filepath + File.separator + fs[i].getName());
+                    blob.write(filepath + File.separator + fs[i].getName());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if(fs[i].isDirectory()) {
+                try{
+                    Tree tree = new Tree(filepath + File.separator + fs[i].getName());
+                    tree.write();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                testAllKey(filepath + File.separator + fs[i].getName());
+            }
+        }
+    }
+
+    //Éú³ÉCommit²âÊÔº¯Êı
+    public static String testCommit(String filepath) throws Exception {
         String author = "java";
         String committer = "java";
         String comment = "success!";
@@ -33,13 +63,14 @@ public class unitTest {
         Commit commit = new Commit(filepath, parent, author, committer, comment);
         commit.ComputeCommit();
         commit.write();
-        System.out.println("æˆåŠŸæäº¤commit: " + commit.GetKey());
+        System.out.println("³É¹¦Ìá½»commit: " + commit.GetKey());
         System.out.println(commit.ShowCommitList());
+        return commit.GetKey();//·µ»ØcommitµÄhashÖµ
     }
 
 
 
-    //ç”ŸæˆTreeæµ‹è¯•
+    //Éú³ÉTree²âÊÔ
     public static void testTree(File file){
         try{
             if(file.isDirectory()){
@@ -54,39 +85,66 @@ public class unitTest {
         }
     }
 
-    //ç”Ÿæˆkeyvalueæµ‹è¯•
-    public static void testKeyValueStorage(File file) throws Exception{
+    //Éú³ÉgitObject²âÊÔ
+    public static void testGitObject(File file) throws Exception{
         try{
             if(file.isFile()) {
-                GitObject keyValueStorage = new GitObject();
-                //è·å–æ–‡ä»¶key
-                String key = keyValueStorage.GetKey(new FileInputStream(file));
-                //å°†æ–‡ä»¶é‡æ–°å†™å…¥ ç”¨äºä¸‹é¢GetValue è·å–åˆ°æ–‡ä»¶
-                keyValueStorage.WriteToFile(keyValueStorage.GetValue(key), "D:\\Java\\managebase\\kvstest.txt");
-                //é€šè¿‡keyè·å–æ–‡ä»¶
-                String s = keyValueStorage.GetValue(key);
-                System.out.println("æ–‡ä»¶çš„å†…å®¹æ˜¯ï¼š" + s);
-                System.out.println("æ–‡ä»¶çš„valueæ˜¯ï¼š"+new Blob(file).GetType()+" "+new Blob(file).Getvrtype()+" "+new Blob(file).GetKey());
+                GitObject gitObject = new GitObject();
+                //»ñÈ¡ÎÄ¼şkey
+                String key = gitObject.GetKey(new FileInputStream(file));
+                //½«ÎÄ¼şÖØĞÂĞ´Èë ÓÃÓÚÏÂÃæGetValue »ñÈ¡µ½ÎÄ¼ş
+                gitObject.WriteToFile(gitObject.GetValue(key), "D:\\Java\\managebase\\kvstest.txt");
+                //Í¨¹ıkey»ñÈ¡ÎÄ¼ş
+                String s = gitObject.GetValue(key);
+                System.out.println("ÎÄ¼şµÄÄÚÈİÊÇ£º" + s);
+                System.out.println("ÎÄ¼şµÄvalueÊÇ£º"+new Blob(file).GetType()+" "+new Blob(file).Getvrtype()+" "+new Blob(file).GetKey());
             }
             else if(file.isDirectory()){
-                System.out.println("æ–‡ä»¶å¤¹çš„å†…å®¹æ˜¯ï¼š"+new Tree(file).GetValue());
+                System.out.println("ÎÄ¼ş¼ĞµÄÄÚÈİÊÇ£º" +new Tree(file).GetValue());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    //Éú³Éreset²âÊÔº¯Êı
+    public static void testReset(String commitkey, String resetpath) throws Exception {
+        Reset reset = new Reset();
+        reset.Resetcommit(commitkey, resetpath);
+    }
+
+    //Éú³É·ÖÖ§branch²âÊÔº¯Êı
+    public static void testBranch(String branchname,String commitkey) throws Exception {
+        Branch branch = new Branch(branchname,commitkey);
+        System.out.println(branch.getBranchName());
+        System.out.println(branch.getCommitId());
+    }
+
+    public static void testshowCommit(String commitID) throws Exception {
+        Log log = new Log();
+        log.showCommitParent(commitID);
+        System.out.println(log.getCommitlist());
+    }
 
     public static void main(String args[]) throws Exception {
+        HEAD head = new HEAD();//Éú³É³õÊ¼»¯HEADÎÄ¼ş
+        Branch master = new Branch("master","");//Éú³É³õÊ¼»¯masterÖ÷·ÖÖ§£¬ÄÚÈİ³õÊ¼»¯Îª¿Õ
         Scanner input = new Scanner(System.in);
-        System.out.println("è¯·è¾“å…¥æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹çš„è·¯å¾„åï¼š");
+        System.out.println("ÇëÊäÈëÎÄ¼ş»òÎÄ¼ş¼ĞµÄÂ·¾¶Ãû£º");
         String path = input.next();
-        testSingleKey(path);
-        //testCommit(path);
-        //testCommit("D:\\Java\\homework1105");
-        testTree(new File(path));
-        testKeyValueStorage(new File(path));
-        HEAD head = new HEAD();
-        System.out.println(head.getHEAD());
+        testAllKey(path);//¶ÔÊäÈëÂ·¾¶½øĞĞKeyValue´æ´¢£¬±ØĞëÔÚcommitÖ®Ç°ÏÈ½øĞĞKeyValue´æ´¢
+        String commitkey = testCommit(path);//²¢¸ù¾İ¸ÃÂ·¾¶Éú³ÉµÚÒ»´Îcommit
+        master.updateBranch(commitkey);//¸üĞÂÖ÷·ÖÖ§masterµÄÄÚÈİ
+        testAllKey("D:\\Java\\homework1105\\test\\fold1");//²âÊÔµ¥¸öÎÄ¼şµÄhashÖµÉú³É
+        commitkey = testCommit("D:\\Java\\homework1105\\test\\fold1");//½«µ¥¸öÎÄ¼ş×÷ÎªcommitµÄÌá½»ĞÎÊ½Ìá½»
+        master.updateBranch(commitkey);//¸üĞÂÖ÷·ÖÖ§masterµÄÄÚÈİ
+        Branch branch = new Branch("branch", master.getCommitId());//Éú³ÉÒ»¸öĞÂµÄ·ÖÖ§
+        head.updateHEAD("branch");//ÇĞ»»¹¤×÷·ÖÖ§£¬¸üĞÂHEADÖ¸ÏòĞÂµÄ·ÖÖ§
+        testAllKey("D:\\Java\\homework1105");//²âÊÔÒ»¸öĞÂµÄ¹¤×÷Â·¾¶
+        commitkey = testCommit("D:\\Java\\homework1105");//²¢×÷ÎªcommitÌá½»
+        branch.updateBranch(commitkey);//¸üĞÂ·ÖÖ§µÄÄÚÈİ
+        testReset("50d8b8bd807b3b4ce37a95e793583effd54120", "D:\\Java\\reset");//¸ù¾İcommitµÄhashÖµ£¬½øĞĞreset²Ù×÷
+        String commitID = master.getCommitId();
+        testshowCommit(commitID);
     }
 }
