@@ -7,7 +7,7 @@ public class Tree extends GitObject {//继承自GitObject
 	private String path;
 	private String key;	//文件夹hash值
 	private File file;
-	private String vrtype = "100644";//文件夹访问权限
+	private String vrtype = "040000";//文件夹访问权限
 	private String temp = "";//文件夹包含的目录内容
 	
     public Tree(String path) throws Exception {//通过路径生成tree类型
@@ -15,10 +15,10 @@ public class Tree extends GitObject {//继承自GitObject
     	this.path = path;
 		for(File f : file.listFiles()){
 			if(f.isFile()){
-				temp = temp + "040000 blob " + new Blob(f.getPath()).GetKey() + " " + f.getName() + "\n";
+				temp = temp + "100644 blob " + new Blob(f.getPath()).GetKey() + " " + f.getName() + "\n";
 			}
 			else if(f.isDirectory()){
-				temp = temp + "100644 tree " + new Tree(f.getPath()).GetKey() + " " + f.getName() + "\n";
+				temp = temp + "040000 tree " + new Tree(f.getPath()).GetKey() + " " + f.getName() + "\n";
 			}
 		}
 		this.key = StringSHA1Checksum(temp);
@@ -28,10 +28,10 @@ public class Tree extends GitObject {//继承自GitObject
     	this.file = file;
     	for(File f : file.listFiles()){
     		if(f.isFile()){
-    			temp = temp + "040000 blob " + new Blob(f.getPath()).GetKey() + " " + f.getName() + "\n";
+    			temp = temp + "100644 blob " + new Blob(f.getPath()).GetKey() + " " + f.getName() + "\n";
     		}
     		else if(f.isDirectory()){
-    			temp = temp + "100644 tree " + new Tree(f.getPath()).GetKey() + " " + f.getName() + "\n";
+    			temp = temp + "040000 tree " + new Tree(f.getPath()).GetKey() + " " + f.getName() + "\n";
     		}
     	}
 	this.key = StringSHA1Checksum(temp);

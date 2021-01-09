@@ -14,7 +14,7 @@ public class HEAD extends Ref{
         Write(path, value);
     }
 
-    public String getHEAD(){//获取HEAD路径
+    public String getHEAD(){//获取HEAD指向的分支路径
         String value = Readfile(path);
         return value;
     }
