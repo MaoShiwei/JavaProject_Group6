@@ -13,6 +13,7 @@ public class Reset extends Ref{//继承自Ref
         String[] s = str.split("\n");
         String[] value = s[0].split(" ");
         ResetObjects(value[1], resetpath);
+        initiate(resetpath);
     }
 
     public void ResetObjects(String objectkey, String resetpath) throws Exception {//根据tree的hash值，进行文件恢复

@@ -108,4 +108,5 @@ public class GitObject {//Blob，Tree，Commit类型的父类
 		bw.write(value);
 		bw.close();
 	}
+
 }
