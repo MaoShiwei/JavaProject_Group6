@@ -5,36 +5,39 @@ import java.util.Scanner;
 
 public class Interaction {
     public static void main(String[] args) throws Exception{
-        HEAD head = new HEAD();//ç”Ÿæˆåˆå§‹åŒ–HEADæ–‡ä»¶
-        Branch master = new Branch("master","");//ç”Ÿæˆåˆå§‹åŒ–masterä¸»åˆ†æ”¯ï¼Œå†…å®¹åˆå§‹åŒ–ä¸ºç©º
         Scanner input = new Scanner(System.in);
-        //System.out.println("git hash:è·å–æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹çš„å“ˆå¸Œå€¼ï¼›git commit:æˆåŠŸæäº¤commitå¹¶ç”Ÿæˆå“ˆå¸Œå€¼ï¼›git value:è·å–æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹å†…å®¹ï¼›git branch;git reset");
-        System.out.println("è¯·è¾“å…¥ä¸€ä¸ªæ–‡ä»¶æˆ–æ–‡ä»¶å¤¹çš„è·¯å¾„ï¼š");
-        String path = input.next();//è¯»å–ä¸Šè¿°æŒ‡ä»¤ä½œç”¨çš„æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹
+        //unitTest.createUser();
+        //System.out.println("git-hash:»ñÈ¡ÎÄ¼ş»òÎÄ¼ş¼ĞµÄ¹şÏ£Öµ£»git-commit:³É¹¦Ìá½»commit²¢Éú³É¹şÏ£Öµ£»git-value:»ñÈ¡ÎÄ¼ş»òÎÄ¼ş¼ĞÄÚÈİ£»git-log:Êä³öµ±Ç°µÄÈ«²¿Ìá½»¼ÇÂ¼£»git-branch:Éú³É²¢ÇĞ»»·ÖÖ§;git-reset£º»Ø¹öµ½Ö¸¶¨ID");
+        System.out.println("ÇëÊäÈëµ±Ç°ÏîÄ¿ËùÔÚ¹¤×÷Â·¾¶£º");
+        String path = input.next();//¶ÁÈ¡ÉÏÊöÖ¸Áî×÷ÓÃµÄÎÄ¼ş»òÎÄ¼ş¼Ğ
         while(path != null) {
-            System.out.println("è¯·è¾“å…¥æ‚¨çš„æ“ä½œï¼š");
-            String command = input.next();//è¯»å–ç”¨æˆ·çš„æŒ‡ä»¤
-
-            //æ ¹æ®ç”¨æˆ·è¾“å…¥çš„æŒ‡ä»¤è¿›å…¥ä¸åŒçš„ifåˆ†æ”¯å®Œæˆæ“ä½œ
-            if (command.equals("git-hash")) {
-                unitTest.testSingleKey(path);//git-hashè¾“å‡ºæ–‡ä»¶æˆ–æ–‡ä»¶å¤¹çš„å“ˆå¸Œå€¼
-            } else if (command.equals("git-commit")) {
-                unitTest.testCommit(path);//git-commitè¾“å‡ºç”¨æˆ·æˆåŠŸæäº¤commitå’ŒcommitIDçš„æç¤º
-            } else if (command.equals("git-value")) {
-                unitTest.testGitObject(new File(path));//git-valueè¾“å‡ºæ–‡ä»¶çš„å†…å®¹æˆ–æ–‡ä»¶å¤¹çš„ç›®å½•
-            } else if (command.equals("git-branch")) {
-                System.out.println("è¯·è¾“å…¥æ–°å»ºåˆ†æ”¯çš„åå­—ï¼š");
-                String BranchName = input.next();//é€šè¿‡ç”¨æˆ·è¾“å…¥ä¸€ä¸ªæ–°åˆ†æ”¯åå­—ï¼Œå»ºç«‹å¹¶åˆ‡æ¢åˆ°æ–°çš„åˆ†æ”¯
-                Branch branch = new Branch(BranchName, master.getCommitId());//ç”Ÿæˆä¸€ä¸ªæ–°çš„åˆ†æ”¯
-                head.updateHEAD(BranchName);//åˆ‡æ¢å·¥ä½œåˆ†æ”¯ï¼Œæ›´æ–°HEADæŒ‡å‘æ–°çš„åˆ†æ”¯
-            } else if (command.equals("git-reset")) {
-                System.out.println("è¯·è¾“å…¥æ‚¨è¦å›æ»šçš„IDï¼š");
-                String ID = input.next();//ç”¨æˆ·è¾“å…¥è¦å›æ»šçš„commitIDï¼Œå®Œæˆå›æ»šæ“ä½œ
-                unitTest.testReset(ID, "D:\\Java\\reset");//æ ¹æ®commitçš„hashå€¼ï¼Œè¿›è¡Œresetæ“ä½œ
-            }
-            else {
-                System.out.println("è¯·è¾“å…¥æ­£ç¡®çš„æŒ‡ä»¤");//é˜²æ­¢ç”¨æˆ·è¾“å…¥é”™è¯¯æŒ‡ä»¤ï¼Œæé†’ç”¨æˆ·
-                System.out.println("æ‚¨å¯ä»¥å°è¯•è¾“å…¥git-hash,git-commit,git-value,git-branch,git-resetç­‰æ“ä½œå‘½ä»¤");
+            System.out.println("ÇëÊäÈëÄúµÄ²Ù×÷£º");
+            String command = input.next();//¶ÁÈ¡ÓÃ»§µÄÖ¸Áî
+            if(!command.equals("git-quit")) {
+                //¸ù¾İÓÃ»§ÊäÈëµÄÖ¸Áî½øÈë²»Í¬µÄif·ÖÖ§Íê³É²Ù×÷
+                if (command.equals("git-hash")) {
+                    unitTest.testSingleKey(path);//git-hashÊä³öÎÄ¼ş»òÎÄ¼ş¼ĞµÄ¹şÏ£Öµ
+                } else if (command.equals("git-commit")) {
+                    String commitkey = unitTest.testCommit(path);//git-commitÊä³öÓÃ»§³É¹¦Ìá½»commitºÍcommitIDµÄÌáÊ¾
+                } else if (command.equals("git-value")) {
+                    unitTest.testGitObject(new File(path));//git-valueÊä³öÎÄ¼şµÄÄÚÈİ»òÎÄ¼ş¼ĞµÄÄ¿Â¼
+                } else if (command.equals("git-branch")) {
+                    unitTest.testBranch();
+                }else if(command.equals("git-log")){
+                    //System.out.println(commitID);
+                    unitTest.testshowCommit();
+                } else if (command.equals("git-reset")) {
+                    System.out.println("ÇëÊäÈëÄúÒª»Ø¹öµÄID£º");
+                    String ID = input.next();//ÓÃ»§ÊäÈëÒª»Ø¹öµÄcommitID£¬Íê³É»Ø¹ö²Ù×÷
+                    unitTest.testReset(ID, path);//¸ù¾İcommitµÄhashÖµ£¬½øĞĞreset²Ù×÷
+                    System.out.println("ÒÑ³É¹¦»Ø¹ö");
+                } else {
+                    System.out.println("ÇëÊäÈëÕıÈ·µÄÖ¸Áî");//·ÀÖ¹ÓÃ»§ÊäÈë´íÎóÖ¸Áî£¬ÌáĞÑÓÃ»§
+                    System.out.println("Äú¿ÉÒÔ³¢ÊÔÊäÈëgit-hash,git-commit,git-value,git-branch,git-log,git-reset,git-quitµÈ²Ù×÷ÃüÁî");
+                }
+            }else if(command.equals("git-quit")){
+                System.out.println("Äú½«ÍË³ö³ÌĞò");
+                break;
             }
         }
         input.close();

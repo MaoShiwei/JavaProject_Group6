@@ -4,7 +4,7 @@ import java.io.*;
 
 public class Ref {//HEAD,Branch,Reset的父类
 
-    public void Write(String path, String value) throws Exception{//写入操作
+    public void Write(String path, String value) throws Exception{//写入操作,将value写入指定path中
         File file = new File(path);
         if (!file.getParentFile().exists()) {
             try {
@@ -21,7 +21,7 @@ public class Ref {//HEAD,Branch,Reset的父类
         bw.close();
     }
 
-    public void WriteToFile(String savepath, String targetpath) throws Exception{//文件与文件之间的读取写入操作
+    public void WriteToFile(String savepath, String targetpath) throws Exception{//文件与文件之间的读取写入操作，将targetpath文件的内容写入savepath文件中
         File file = new File(savepath);
         if (!file.getParentFile().exists()) {
             try {
@@ -46,7 +46,7 @@ public class Ref {//HEAD,Branch,Reset的父类
         output.close();
     }
 
-    public String Readfile(String path) {//读取文件
+    public static String Readfile(String path) {//读取指定path下的文件并返回文件内容
         File file = new File(path);
         String result = "";
         try{
@@ -60,5 +60,13 @@ public class Ref {//HEAD,Branch,Reset的父类
             e.printStackTrace();
         }
         return result;
+    }
+
+    public void initiate(String path) {//初始化项目管理路径
+        File file = new File(path);
+        boolean IsOK = file.exists();
+        if (IsOK){
+            file.delete();
+        }
     }
 }

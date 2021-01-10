@@ -13,10 +13,11 @@ public class Commit extends GitObject {//继承自GitObject
     private String key;//commit的hash值
     private File file;
     static LinkedList<String> CommitList = new LinkedList<String>();//commit链表
+	static LinkedList<String> TreeIDList = new LinkedList<String>();//commit指向的tree的key值链表
     private String value = "";//commit的全部内容
 	private String path = "";
-	private long date = new Date().getTime();
-	private String timezone = "+0800";
+	private long date = new Date().getTime();//获取提交commit的时间
+	private String timezone = "+0800";//设定中国时区
 
 	public Commit(String path, String parent, String author, String committer, String comment) {
 		this.path = path;
@@ -35,16 +36,22 @@ public class Commit extends GitObject {//继承自GitObject
 		if(this.file.isDirectory()){//文件夹类型
 			FileKey = new Tree(this.file).GetKey();//按照Tree类进行hash值生成
 		}
+		TreeIDList.add(FileKey);
 		if (CommitList.isEmpty()) {//如果此时链表为空，表明是第一个commit，默认parent为null
 			value += "tree " + FileKey + "\n" + "parent null\n" + "author " + author + " " + date + " " + timezone + "\n" + "committer " + committer + " " + date + " " + timezone + "\n" + "comment " + comment;
 			this.key = StringSHA1Checksum(value);//进行hash值计算
 			CommitList.add(this.key);//向链表添加commit
+			write();
 		} else {
-			if (CommitList.getFirst()!= FileKey) {//判断当前commit是否与前一个commit不同
+			if (TreeIDList.getFirst().equals(FileKey)) {//判断当前commit是否与前一个commit不同
+				System.out.println("无有效修改，无法提交commit");
+				this.key = CommitList.getFirst();
+			}else {
 				parent = CommitList.getFirst();//获取上一个commit的hash值
 				value += "tree " + FileKey + "\n" + "parent " + parent + "\n" + "author " + author + " " + date + " " + timezone + "\n" + "committer " + committer + " " + date + " " + timezone + "\n" + "comment " + comment;
 				this.key = StringSHA1Checksum(value);//进行hash值计算
 				CommitList.addFirst(this.key);//向链表添加commit
+				write();
 			}
 		}
 	}
@@ -60,11 +67,5 @@ public class Commit extends GitObject {//继承自GitObject
 	public static LinkedList<String> ShowCommitList(){
 		return CommitList;
 	}//获取commit链表
-		
-	public String ShowCommit() {//显示commit
-		parent = CommitList.get(2);
-		String info = "NewCommit: " + CommitList.getFirst() + " Committer: " + committer + " Author: " + author + " LastCommit: " + parent;
-		return info;
-	}
 		
 }

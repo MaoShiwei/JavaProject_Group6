@@ -25,9 +25,12 @@ public class Branch extends Ref{//继承自Ref
         return f.exists();
     }
 
-    public void checkoutBranch(String BranchName) throws Exception {//切换branch
+    public void checkoutBranch(String BranchName, String workpath) throws Exception {//切换branch
         if (IsBranchExist(BranchName)) {
-        	writeCommitID();
+        	String branchpath = path + File.separator + BranchName;
+            String commitID = Readfile(branchpath);
+            Reset checkoutBranch = new Reset();
+            checkoutBranch.Resetcommit(commitID, workpath);
         }
         else System.out.println("The branch doesn't exist");
     }
@@ -36,7 +39,7 @@ public class Branch extends Ref{//继承自Ref
     public void writeCommitID() throws Exception {//将commit的hash值写入以branch名字命名的文件中
         Write(path + File.separator + BranchName,CommitID);
     }
-    
+
     public String getBranchName(){
         return BranchName;
     }//获取branch名字
