@@ -72,12 +72,12 @@
 - 定义创建reset函数Reset()：创建一个reset操作。
 - 定义reset操作函数ResetObjects()：输入为指定commit的hash值，通过hash值，在key-value仓库中恢复文件。遇到Tree类型，则在现有工作路径后添加文件夹名，生成新的路径；遇到Blob类型，则生成名为Blob对应文件名的文件，将key对应的value复制到文件中。
 
-##### 9、文本比对Diff：
+##### 10、文本比对Diff：
 
 - 定义计算LCS（最长公共子序列）长度函数lcsLength()：该函数将input1[1..m]和input2[1..n]作为输入序列，计算所有1≤i≤m和1≤j≤n的input1[1..i]和input2[1..j]之间的LCS，并将其存储在opt[i，j]中。opt[m，n]将包含input1和input2的LCS的长度。
 - 定义生成Diff函数printDiff()：此函数将回溯opt矩阵，并打印两个序列之间的差异。请注意，如果使用>和≤交换≥和<，将得到不同的答案。
 
-##### 10、仓库管理路径：
+##### 11、仓库管理路径：
 
 - managebase：与git相关的文件的总文件
 - objects：存储blob，tree，commit的KeyValue键值对
@@ -85,17 +85,18 @@
 - refs\head：存储分支文件
 - HEAD：存储当前分支的路径
 
-##### 11、交互测试：
+##### 12、单元测试：
+
+- 
+
+##### 13、交互测试：
 
 ###### 目标：通过Scanner接收用户指令，根据一些简单的操作指令实现对应操作。
 
 
 - 通过unitTest文件对gitObject.java,Blob.java,Tree.java,Commit.java,Branch.java,Reset.java,Log.java几个文件进行功能测试，每个功能写一个方法，用main函数调用测试，确保其成功运行，目标功能顺利实现。
-
 - 实现交互界面，模拟git命令行命令，用户输入路径（文件夹或文件皆可），和操作指令（如git-branch、git-reset、git-hash、git-commit、git-value、git-log），程序可以自动完成指令对应的操作，并输出结果和提示返回给用户。
-
 - 加入了循环，用户在输入路径后，可以多次输入指令完成操作；当用户希望结束命令行交互时，可以通过输入git-quit退出循环、结束程序。
-
 - 生成一个project：用户输入一个路径，可以通过路径生成对应的key-value键值对，默认为第一个commit，并自动设置为master分支，更新Head值。
 - 查看文件、文件夹的hash值：git-hash指令，可以使用户查看输入路径的hash值。
 - 查看文件、文件夹的内容（value）：git-value指令，可以输出用户指定路径的value。如果输入的是单个文件，则输出文件内容；如果输入的是文件夹，则输出文件夹的目录、性质（Blob或Tree）和hash值。
