@@ -6,13 +6,13 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.Scanner;
 
-public class unitTest extends Ref{
+public class unitTest{
     public static HEAD head;//生成初始化HEAD文件
-    public static Branch nowbranch;//生成初始化master主分支，内容初始化为空
+    public static Branch nowbranch;
 
     static {
         try {
-            nowbranch = new Branch("master","");
+            nowbranch = new Branch("master","");//生成初始化master主分支，内容初始化为空
             head = new HEAD();
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +58,7 @@ public class unitTest extends Ref{
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                testAllKey(filepath + File.separator + fs[i].getName());
+                testAllKey(filepath + File.separator + fs[i].getName());//对文件夹进行递归遍历
             }
         }
     }

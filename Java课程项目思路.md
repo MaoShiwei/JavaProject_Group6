@@ -86,22 +86,15 @@
 - HEAD：存储当前分支的路径
 
 ##### 12、单元测试：
-在单元测试部分，对HashFile、Node、Commit、Blob、Tree、keyValueStorage六个文件分别进行了单元测试。
 
-在TestaHashFile中，使用junit单元测试框架、通过给定路径的方式，测试了文件的功能。
-
-在NodeTest中，使用main函数，创建节点、填充节点数据并打印节点内容，测试了文件功能的实现。
-
-在keyValueStorageTest中，测试获取key的GetKey方法，将文件重新写入并用于测试在GetValue方法中获取到文件，最后测试通过key获取文件并打印文件内容。
-
-在BlobTest中，给定文件路径，测试用write方法将文件重新写入并使用GetKey方法获取并打印key，测试Blob文件是否实现功能。
-
-在TreeTest中，思路和BlobTest基本相同，给定文件夹路径，通过测试ComputeKey方法获取key并打印key来测试Tree.java文件。
-
-在CommitTest中，首先构建提交对象，给定文件夹路径，parent、author、committer、comment，测试Commit文件中的GetKey方法能否获取key，ComputeCommit能否计算提交，showCommit方法能否显示提交记录来测试整个Commit文件的最终功能的实现情况。
-
-在六个单元测试中，基本对HashFile、Node、Commit、Blob、Tree、keyValueStorage这六个功能文件实现了测试，确定了其功能实现正常与否，并提示了功能文件的修改和优化，基本实现了进行单元测试的初衷和目的。
-
+- 在单元测试部分，对HashFile、Node、Commit、Blob、Tree、keyValueStorage六个文件分别进行了单元测试。
+- 在TestaHashFile中，使用junit单元测试框架、通过给定路径的方式，测试了文件的功能。
+- 在NodeTest中，使用main函数，创建节点、填充节点数据并打印节点内容，测试了文件功能的实现。
+- 在keyValueStorageTest中，测试获取key的GetKey方法，将文件重新写入并用于测试在GetValue方法中获取到文件，最后测试通过key获取文件并打印文件内容。
+- 在BlobTest中，给定文件路径，测试用write方法将文件重新写入并使用GetKey方法获取并打印key，测试Blob文件是否实现功能。
+- 在TreeTest中，思路和BlobTest基本相同，给定文件夹路径，通过测试ComputeKey方法获取key并打印key来测试Tree.java文件。
+- 在CommitTest中，首先构建提交对象，给定文件夹路径，parent、author、committer、comment，测试Commit文件中的GetKey方法能否获取key，ComputeCommit能否计算提交，showCommit方法能否显示提交记录来测试整个Commit文件的最终功能的实现情况。
+- 在六个单元测试中，基本对HashFile、Node、Commit、Blob、Tree、keyValueStorage这六个功能文件实现了测试，确定了其功能实现正常与否，并提示了功能文件的修改和优化，基本实现了进行单元测试的初衷和目的。
 
 ##### 13、交互测试：
 
